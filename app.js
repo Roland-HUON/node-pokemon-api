@@ -11,8 +11,9 @@ const port = 3000;
 app.get('/', (req, res) => {
     res.send('Hello World 2!');
 });
-app.get('/api/pokemons/1', (req, res) => {
-    res.send("Hello Bulbizarre!");
+app.get('/api/pokemons/:id', (req, res) => {
+    const id = req.params.id;
+    res.send("Vous avez demandé le pokemon n°" + id);
 });
 
 app.listen(port, () => {
