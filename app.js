@@ -9,6 +9,13 @@ let pokemons = require('./mock-pokemon');
 const app = express();
 const port = 3000;
 
+//middleware : link between the request and the response/ data and user
+const logger = (req, res, next) => {
+    console.log('URL : ' + req.url);
+    next();
+}
+app.use(logger);
+
 //road : app.methode(get, send, post, delete...)(chemin, (req or res))
 // req.params.id ou req.params.name ...
 app.get('/', (req, res) => {
