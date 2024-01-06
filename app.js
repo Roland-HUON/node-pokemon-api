@@ -19,7 +19,7 @@ app.get('/api/pokemons', (req,res) => {
 app.get('/api/pokemons/:id', (req, res) => {
     const id = req.params.id;
     const pokemon = pokemons.find(pokemon => pokemon.id == id);
-    res.send("Vous avez demandé le pokémon " + pokemon.name);
+    res.json(pokemon);
 });
 
 app.listen(port, () => {
