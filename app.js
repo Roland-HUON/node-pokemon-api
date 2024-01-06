@@ -3,6 +3,7 @@
 //npm install --save express
 //npm install --save-dev nodemon (need to reload page not the entirety of the terminal)
 const express = require('express');
+const {success} = require('./helper');
 let pokemons = require('./mock-pokemon');
 
 const app = express();
@@ -14,12 +15,14 @@ app.get('/', (req, res) => {
     res.send('Hello World 2!');
 });
 app.get('/api/pokemons', (req,res) => {
-    res.send("Il y a " + pokemons.length + " pokémons dans le pokédex, pour le moment !");
+    const message = "La liste des pokémons a bien été récupérée.";
+    res.json(success(message, pokemons));
 });
 app.get('/api/pokemons/:id', (req, res) => {
     const id = req.params.id;
     const pokemon = pokemons.find(pokemon => pokemon.id == id);
-    res.json(pokemon);
+    const message = "Un pokémon a bien été trouvé !";   
+    res.json(success(message, pokemon));
 });
 
 app.listen(port, () => {
