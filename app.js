@@ -2,7 +2,9 @@
 //npm run ...(script package.json)
 //npm install --save express
 //npm install --save-dev nodemon (need to reload page not the entirety of the terminal)
+//npm install morgan --save-dev
 const express = require('express');
+const morgan = require('morgan');
 const {success} = require('./helper');
 let pokemons = require('./mock-pokemon');
 
@@ -10,10 +12,7 @@ const app = express();
 const port = 3000;
 
 //middleware : link between the request and the response/ data and user
-app.use((req, res, next) => {
-    console.log('URL : ' + req.url);
-    next();
-});
+app.use(morgan('dev'));
 
 //road : app.methode(get, send, post, delete...)(chemin, (req or res))
 // req.params.id ou req.params.name ...
