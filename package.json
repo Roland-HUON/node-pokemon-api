@@ -1,0 +1,15 @@
+{
+  "name": "node-pokemon-api",
+  "version": "1.0.0",
+  "description": "An API rest to handle some pokemons.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Roland-HUON/node-pokemon-api"
+  },
+  "author": "Roland",
+  "license": "ISC"
+}
