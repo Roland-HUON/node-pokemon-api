@@ -5,9 +5,11 @@
 //npm install morgan --save-dev
 //npm install serve-favicon --save
 //postman ou insomnia pour tester
+//npm install body-parser --save
 const express = require('express');
 const morgan = require('morgan');
 const favicon = require('serve-favicon');
+const bodyparser = require('body-parser');
 const {success, getUniqueId} = require('./helper');
 let pokemons = require('./mock-pokemon');
 
@@ -17,8 +19,8 @@ const port = 3000;
 //middleware : link between the request and the response/ data and user
 app
     .use(favicon(__dirname + '/favicon.ico'))
-    .use(morgan('dev'));
-
+    .use(morgan('dev'))
+    .use(bodyparser.json());
 //road : app.methode(get, send, post, delete...)(chemin, (req or res))
 // req.params.id ou req.params.name ...
 app.get('/', (req, res) => {
@@ -41,6 +43,16 @@ app.post('/api/pokemons', (req, res) => {
     pokemons.push(pokemonCreated);
     const message = "Le pokemon " + pokemonCreated.name + " a bien été créé.";
     res.json(success(message, pokemonCreated));
+});
+
+app.put('/api/pokemons/:id', (req,res)=>{
+    const id = parseInt(req.params.id);
+    const pokemonUpdated = {...req.body, id: id};
+    pokemons = pokemons.map(pokemon=>{
+        return pokemon.id === id ? pokemonUpdated : pokemon
+    });
+    const message = "Le pokémon " + pokemonUpdated.name + " a bien été modifié.";
+    res.json(success(message, pokemonUpdated));
 });
 
 app.listen(port, () => {
