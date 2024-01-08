@@ -6,6 +6,8 @@
 //npm install serve-favicon --save
 //postman ou insomnia pour tester
 //npm install body-parser --save
+//npm install sequelize --save
+//npm install mariadb --save
 const express = require('express');
 const morgan = require('morgan');
 const favicon = require('serve-favicon');
