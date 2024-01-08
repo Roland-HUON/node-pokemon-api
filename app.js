@@ -12,11 +12,32 @@ const express = require('express');
 const morgan = require('morgan');
 const favicon = require('serve-favicon');
 const bodyparser = require('body-parser');
+const { Sequelize } = require('sequelize');
 const {success, getUniqueId} = require('./helper');
 let pokemons = require('./mock-pokemon');
 
 const app = express();
 const port = 3000;
+
+//configure sequelize
+const sequelize = new Sequelize(
+    'pokedex',
+    'root',
+    '',
+    {
+        host: 'localhost',
+        dialect: 'mariadb',
+        dialectOptions:{
+            timezone: 'Etc/GMT-2'
+        },
+        logging: false
+    }
+)
+
+// Connexion
+sequelize.authenticate()
+    .then(()=>console.log('Connection has been established successfully.'))
+    .catch(error=>console.error('Unable to connect to the database:', error));
 
 //middleware : link between the request and the response/ data and user
 app
