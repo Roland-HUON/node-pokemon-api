@@ -12,9 +12,10 @@ const express = require('express');
 const morgan = require('morgan');
 const favicon = require('serve-favicon');
 const bodyparser = require('body-parser');
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const {success, getUniqueId} = require('./helper');
 let pokemons = require('./mock-pokemon');
+const PokemonModel = require('./models/pokemon');
 
 const app = express();
 const port = 3000;
@@ -39,6 +40,12 @@ sequelize.authenticate()
     .then(()=>console.log('Connection has been established successfully.'))
     .catch(error=>console.error('Unable to connect to the database:', error));
 
+const Pokemon = PokemonModel(sequelize, DataTypes);
+
+sequelize.sync({force: true})
+    .then(()=>console.log('La base de données a été synchronisée.'))
+    .then(()=>Pokemon.bulkCreate(pokemons))
+    .then(()=>console.log('Les données ont été insérées.'));
 //middleware : link between the request and the response/ data and user
 app
     .use(favicon(__dirname + '/favicon.ico'))
