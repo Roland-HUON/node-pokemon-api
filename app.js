@@ -15,7 +15,7 @@ const bodyparser = require('body-parser');
 const { Sequelize, DataTypes } = require('sequelize');
 const {success, getUniqueId} = require('./helper');
 let pokemons = require('./mock-pokemon');
-const PokemonModel = require('./models/pokemon');
+const PokemonModel = require('./src/models/pokemon');
 
 const app = express();
 const port = 3000;
@@ -43,9 +43,19 @@ sequelize.authenticate()
 const Pokemon = PokemonModel(sequelize, DataTypes);
 
 sequelize.sync({force: true})
-    .then(()=>console.log('La base de données a été synchronisée.'))
-    .then(()=>Pokemon.bulkCreate(pokemons))
-    .then(()=>console.log('Les données ont été insérées.'));
+    .then(()=>{
+        console.log('La base de données a été synchronisée.')
+
+        pokemons.map(pokemon => {
+            Pokemon.create({
+                name: pokemon.name,
+                hp: pokemon.hp,
+                cp: pokemon.cp,
+                picture: pokemon.picture,
+                types: pokemon.types.join()
+            }).then(bulbizarre => console.log(bulbizarre.toJSON()))
+        })
+});
 //middleware : link between the request and the response/ data and user
 app
     .use(favicon(__dirname + '/favicon.ico'))
