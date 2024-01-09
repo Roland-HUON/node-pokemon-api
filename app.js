@@ -14,7 +14,7 @@ const favicon = require('serve-favicon');
 const bodyparser = require('body-parser');
 const { Sequelize, DataTypes } = require('sequelize');
 const {success, getUniqueId} = require('./helper');
-let pokemons = require('./mock-pokemon');
+let pokemons = require('./src/db/mock-pokemon');
 const PokemonModel = require('./src/models/pokemon');
 
 const app = express();
