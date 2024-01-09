@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Le nom est déjà pris.'
         },
         validate:{
-          isEmpty: {msg: 'Vous devez remplir le champs "name" obligatoirement.'},
+          notEmpty: {msg: 'Vous devez remplir le champs "name" obligatoirement.'},
           notNull: {msg: 'Le champs "name" est un champs requis.'}
         }
       },
