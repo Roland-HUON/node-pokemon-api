@@ -1,4 +1,6 @@
 /* L’API Rest et la Base de données : Créer un modèle Sequelize */
+const validTypes = ['Plante', 'Poison', 'Feu', 'Eau', 'Insecte', 'Normal', 'Electrik', 'Fée', 'Vol', 'Combat', 'Psy'];
+
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('Pokemon', { // On définit le modèle nom + description (avec propriétés nom + spécificités) + config globale
       id: {
@@ -9,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique : { 
+          msg: 'Le nom est déjà pris.'
+        },
         validate:{
           isEmpty: {msg: 'Vous devez remplir le champs "name" obligatoirement.'},
           notNull: {msg: 'Le champs "name" est un champs requis.'}
@@ -62,6 +67,21 @@ module.exports = (sequelize, DataTypes) => {
         },
         set(types){
           this.setDataValue('types', types.join())
+        },
+        validate: {
+          isTypesValid(value){
+            if(!value){
+              throw new Error('Un pokémon doit au moins avoir un type.');
+            }
+            if(value.split(',').length > 3){
+              throw new Error('Un pokémon ne peut pas avoir plus de 3 types.');
+            }
+            value.split(',').forEach(type => {
+              if(!validTypes.includes(type)){
+                throw new Error(`Le type d'un pokémon doit être parmi les suivants : ` + validTypes);
+              }
+            })
+          }
         }
       }
     }, {
