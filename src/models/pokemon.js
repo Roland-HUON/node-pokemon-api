@@ -8,19 +8,51 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate:{
+          isEmpty: {msg: 'Vous devez remplir le champs "name" obligatoirement.'},
+          notNull: {msg: 'Le champs "name" est un champs requis.'}
+        }
       },
       hp: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate:{
+          isInt : {msg: 'Utiliser uniquement des nombres entiers pour hp.'},
+          min : {
+            args : [0],
+            msg : 'Vous devez rentrer un nombre supérieur à 0 pour hp.'
+          },
+          max : {
+            args : [999],
+            msg : 'Vous devez rentrer un nombre inférieur à 1000 pour hp.'
+          },
+          notNull: {msg: 'Hp est est un champs requis.'}
+        }
       },
       cp: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate:{
+          isInt : {msg: 'Utiliser uniquement des nombres entiers pour cp.'},
+          min : {
+            args : [0],
+            msg : 'Vous devez rentrer un nombre supérieur à 0 pour cp.'
+          },
+          max : {
+            args : [99],
+            msg : 'Vous devez rentrer un nombre inférieur à 100 pour cp.'
+          },
+          notNull: {msg: 'Cp est est un champs requis.'}
+        }
       },
       picture: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate:{
+          isUrl: {msg: 'Vous devez rentrez une url valide pour l\'image.'},
+          notNull: {msg: 'Picture est est un champs requis.'}
+        }
       },
       types: {
         type: DataTypes.STRING,
