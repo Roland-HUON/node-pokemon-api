@@ -33,7 +33,7 @@ module.exports = (app) => {
     } else {
       Pokemon.findAll({
         order : ['name'],
-        limit : limite(100000)
+        limit : limite(1000)
       })
       .then(pokemons => {
         const message = 'La liste des pokémons a bien été récupérée.';
