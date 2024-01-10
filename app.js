@@ -8,6 +8,8 @@
 //npm install body-parser --save
 //npm install sequelize --save
 //npm install mariadb --save
+//npm install bcrypt --save
+//npm install jsonwebtoken --save
 const express = require('express');
 const morgan = require('morgan');
 const favicon = require('serve-favicon');
@@ -30,6 +32,7 @@ require('./src/routes/findPokemonByPk')(app);
 require('./src/routes/createPokemon')(app);
 require('./src/routes/updatePokemon')(app);
 require('./src/routes/deletePokemon')(app);
+require('./src/routes/login')(app);
 
 app.use(({res})=>{
     const message = 'Impossible de trouver la ressource demandée ! Vous pouvez essayez une autre URL.';
